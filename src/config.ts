@@ -104,6 +104,7 @@ type Config = {
     precision?: number;
   };
   keywordTimeline?: 'follower' | 'local' | 'hybrid' | 'global';
+  mecabDicType?: 'ipadic' | 'unidic';
 };
 
 import { performStartupConfigCheck } from './config-updater.js';

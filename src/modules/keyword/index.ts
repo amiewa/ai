@@ -53,12 +53,14 @@ export default class extends Module {
     );
 
     if (!Array.isArray(interestedNotes)) return;
+    // IPAdic: token[8] = 読み / UniDic: token[7] = 語彙素読み
+    const readingIndex = config.mecabDicType === 'unidic' ? 7 : 8;
     let keywords: string[][] = [];
 
     for (const note of interestedNotes) {
       const tokens = await mecab(note.text, config.mecab, config.mecabDic);
       const keywordsInThisNote = tokens.filter(
-        (token) => token[2] == '固有名詞' && token[8] != null
+        (token) => token[2] == '固有名詞' && token[readingIndex] != null
       );
       keywords = keywords.concat(keywordsInThisNote);
     }
@@ -84,7 +86,7 @@ export default class extends Module {
         learnedAt: Date.now(),
       });
 
-      text = serifs.keyword.learned(keyword[0], kanaToHira(keyword[8]));
+      text = serifs.keyword.learned(keyword[0], kanaToHira(keyword[readingIndex]));
     }
 
     this.ai.post({
