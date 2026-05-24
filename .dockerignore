@@ -6,9 +6,41 @@ ai.*
 *.png
 Dockerfile
 docker-compose.yml
+compse.yml
 LICENSE
 
 node_modules/
 test/
 data/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.identifier
+*:Zone.Identifier
+
+
+# Dependencies
+node_modules/
+package-lock.json
+.pnpm-store/
+
+# Local Environment
+.env
+
+# Agent
+.agents/
+.claude/
+.gemini/
+tasks/
+AGENTS.md
+GEMINI.md
+CLAUDE.md
+CLAUDE.local.md
+
+# IDE
 .vscode/
+.idea/
+*.swp
+*.swo
+
