@@ -166,3 +166,9 @@ precision = 2
 #   "global"   : グローバルタイムライン      (notes/global-timeline)
 # 未指定時は "hybrid"
 keywordTimeline = "hybrid"
+
+# MeCab辞書の種別を指定します（読みのカラム位置が辞書ごとに異なるため）
+#   "ipadic" : mecab-ipadic-neologd 等のIPAdic系（デフォルト）
+#   "unidic" : unidic-csj-202512 / unidic-cwj-202512
+# 未指定時は "ipadic"
+mecabDicType = "ipadic"
