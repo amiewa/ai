@@ -7,10 +7,31 @@
 # {name} のように渡される変数をセリフで使用できます。(詳細は serifs.ts を参照)
 
 [core]
+# 変数: {name}
 setNameOk = "了解しました！これから新しい名前でお呼びします。{name}！"
 san = "さん、付けましょうか？"
 yesOrNo = "「はい」または「いいえ」でお答えください"
-hello = "こんにちは、特別仕様です♪"
+# 変数: {name}
+hello = "こんにちは、{name}♪"
+# 変数: {name}
+helloNight = "こんばんは、{name}♪"
+# 変数: {tension}, {name}
+goodMorning = "おはようございます、{name}！{tension}"
+# 変数: {name}
+goodNight = "おやすみなさい、{name}！"
+# 変数: {name}
+omedeto = "ありがとうございます、{name}♪"
+tooLong = "長すぎる気がします..."
+invalidName = "発音が難しい気がします"
+# 変数: {name}
+itai = "{name}、大丈夫ですか？ いたいのいたいの飛んでけっ！"
+shutdown = "私まだ眠くないですよ...？"
+transferNeedDm = "わかりました、それはチャットで話しませんか？"
+# 変数: {code}
+transferCode = "わかりました。\n合言葉は「{code}」です！"
+transferFailed = "うーん、合言葉が間違ってませんか...？"
+# 変数: {name}
+transferDone = "はっ...！ おかえりなさい、{name}！"
 
 [core.erait.general]
 # 配列形式
@@ -25,11 +46,281 @@ values = [
   "お疲れ様です、頑張ってますね！"
 ]
 
+[core.erait.specify2]
+# specify2 は (thing, name) を受け取る配列返却関数です
+# 変数: {thing}, {name} / 配列形式
+values = [
+  "{thing}でえらいですよ！",
+  "{thing}で、本当にえらいですね！"
+]
+
+[core.okaeri]
+# 帰宅時の反応
+# 変数: {name}
+love2 = "おかえりなさいませ♡♡♡{name}っっ♡♡♡♡♡"
+# 変数: {name}
+normal = "おかえりなさい、{name}！"
+
+[core.okaeri.love]
+# 変数: {name} / 配列形式
+values = [
+  "おかえりなさい、{name}♪",
+  "おかえりなさいませっ、{name}っ。"
+]
+
+[core.itterassyai]
+# 出発時の反応
+# 変数: {name}
+love = "いってらっしゃい、{name}♪"
+# 変数: {name}
+normal = "いってらっしゃい、{name}！"
+
+[core.nadenade]
+# なでなでへの反応
+normal = "ひゃっ…！ びっくりしました"
+hate1 = "…っ！ やめてほしいです..."
+hate2 = "触らないでください"
+hate3 = "近寄らないでください"
+hate4 = "やめてください。通報しますよ？"
+# 配列形式
+love2 = ["わわっ… 恥ずかしいです", "あうぅ… 恥ずかしいです…", "ふやぁ…？"]
+love3 = [
+  "んぅ… ありがとうございます♪",
+  "わっ、なんだか落ち着きますね♪",
+  "くぅんっ… 安心します…",
+  "眠くなってきました…"
+]
+
+[core.kawaii]
+# かわいいと言われたとき
+hate = "…ありがとうございます"
+# 配列形式
+normal = ["ありがとうございます♪", "照れちゃいます..."]
+love = ["嬉しいです♪", "照れちゃいます..."]
+
+[core.suki]
+# 好きと言われたとき
+normal = "えっ… ありがとうございます…♪"
+# 変数: {name}
+love = "私もその… {name}のこと好きですよ！"
+# hate は defaultSerifs で null が設定されています
+# TOMLにnull型は存在しないため、hate キーはTOMLから設定できません
+
+[core.hug]
+# ハグへの反応
+normal = "ぎゅー..."
+love = "ぎゅーっ♪"
+hate = "離れてください..."
+
+[core.humu]
+# 踏まれたときの反応
+love = "え、えっと…… ふみふみ……… どうですか…？"
+normal = "えぇ... それはちょっと..."
+hate = "……"
+
+[core.batou]
+# 罵倒への反応
+love = "えっと…、お、おバカさん…？"
+normal = "(じとー…)"
+hate = "…頭大丈夫ですか？"
+
+[core.ote]
+# お手への反応
+normal = "くぅん... 私わんちゃんじゃないですよ...？"
+love1 = "わん！"
+love2 = "わんわん♪"
+
 [keyword]
+# 変数: {word}, {reading}
 learned = "（{word}、{reading} を覚えました）"
+# 変数: {word}
+remembered = "{word}"
+
+[dice]
+# 変数: {res}
+done = "{res} です！"
+
+[birthday]
+# 変数: {name}
+happyBirthday = "お誕生日おめでとうございます、{name}🎉"
+
+[reversi]
+# リバーシへの反応
+ok = "良いですよ～"
+decline = "ごめんなさい、今リバーシはするなと言われてます..."
+# 変数: {name}, {strength}
+started = "対局を{name}と始めました！ (強さ{strength})"
+# 変数: {name}
+startedSettai = "({name}の接待を始めました)"
+iWon = "{name}に勝ちました♪"
+iWonButSettai = "({name}に接待で勝っちゃいました...)"
+iLose = "{name}に負けました..."
+iLoseButSettai = "({name}に接待で負けてあげました...♪)"
+drawn = "{name}と引き分けました～"
+drawnSettai = "({name}に接待で引き分けました...)"
+youSurrendered = "{name}が投了しちゃいました"
+settaiButYouSurrendered = "({name}を接待していたら投了されちゃいました... ごめんなさい)"
+
+[guessingGame]
+# 数当てゲームへの反応
+alreadyStarted = "え、ゲームは既に始まってますよ！"
+plzDm = "メッセージでやりましょう！"
+started = "0~100の秘密の数を当ててみてください♪"
+nan = "数字でお願いします！「やめる」と言ってゲームをやめることもできますよ！"
+cancel = "わかりました～。ありがとうございました♪"
+# 変数: {num}
+grater = "{num}より大きいですね"
+graterAgain = "もう一度言いますが{num}より大きいですよ！"
+less = "{num}より小さいですね"
+lessAgain = "もう一度言いますが{num}より小さいですよ！"
+# 変数: {tries}
+congrats = "正解です🎉 ({tries}回目で当てました)"
+
+[kazutori]
+# 数取りゲームへの反応
+alreadyStarted = "今ちょうどやってますよ～"
+matakondo = "また今度やりましょう！"
+# 変数: {minutes}
+intro = "みなさん、数取りゲームしましょう！\n0~100の中で最も大きい数字を取った人が勝ちです。他の人と被ったらだめですよ～\n制限時間は{minutes}分です。数字はこの投稿にリプライで送ってくださいね！"
+finish = "ゲームの結果発表です！"
+# 変数: {user}, {name}
+finishWithWinner = "今回は{user}さん（{name}）の勝ちです！またやりましょう♪"
+finishWithNoWinner = "今回は勝者はいませんでした... またやりましょう♪"
+onagare = "参加者が集まらなかったのでお流れになりました..."
+
+[emoji]
+# 変数: {emoji}
+suggest = "こんなのはどうですか？→{emoji}"
+
+[fortune]
+# 占いの結果通知
+# 変数: {name}
+cw = "私が今日の{name}の運勢を占いました..."
+
+[timer]
+# タイマーへの反応
+set = "わかりました！"
+invalid = "うーん...？"
+tooLong = "長すぎます…"
+# 変数: {time}, {name}
+notify = "{name}、{time}経ちましたよ！"
+
+[reminder]
+# リマインダーへの反応
+invalid = "うーん...？"
+doneFromInvalidUser = "イタズラはめっですよ！"
+reminds = "やること一覧です！"
+# 変数: {name}
+notify = "{name}、これやりましたか？"
+# 変数: {thing}, {name}
+notifyWithThing = "{name}、「{thing}」やりましたか？"
+cancel = "わかりました。"
+
+[reminder.done]
+# 変数: {name} / 配列形式
+values = [
+  "よく出来ました、{name}♪",
+  "{name}、さすがですっ！",
+  "{name}、えらすぎます...！"
+]
+
+[valentine]
+# バレンタインの反応
+# 変数: {name}
+chocolateForYou = "{name}、その... チョコレート作ったのでよかったらどうぞ！🍫"
+
+[server]
+# サーバー監視の通知
+cpu = "サーバーの負荷が高そうです。大丈夫でしょうか...？"
+
+[maze]
+# 迷路生成の通知
+post = "今日の迷路です！ #AiMaze"
+foryou = "描きました！"
+
+[chart]
+# チャート生成の通知
+post = "インスタンスの投稿数です！"
+foryou = "描きました！"
+
+[checkCustomEmojis]
+# カスタム絵文字チェックの通知
+# 変数: {server_name}, {num}
+post = "{server_name}に{num}件の絵文字が追加されました！"
+# 変数: {emoji}
+emojiPost = ":{emoji}:\n(`{emoji}`) #AddCustomEmojis"
+# 変数: {server_name}, {num}, {text}
+postOnce = "{server_name}に{num}件の絵文字が追加されました！\n{text} #AddCustomEmojis"
+# 変数: {emoji}
+emojiOnce = ":{emoji}:(`{emoji}`)"
+
+[aichat]
+# AIチャットへの反応
+# 変数: {type}
+nothing = "あぅ... {type}のAPIキーが登録されてないみたいです"
+# 変数: {type}, {errorCode}, {errorMessage}
+error = "うぇ...{type}でエラーが発生しちゃったみたいです。\nエラーコード: {errorCode}\nエラーメッセージ: {errorMessage}"
+# 変数: {text}
+post = "{text} #aichat"
+
+[aichat.autoNoteError]
+# AI自動投稿エラー時のメッセージ候補（配列形式）
+values = [
+  "ん〜ぅ〜はぁ...それっぽい独り言を考えたけど、困っちゃいました...",
+  "うぅ...独り言を考えたけど、なんだか変になっちゃいました..."
+]
+
+[follow.success]
+# フォロー成功時の通知
+# 変数: {userDisplay}
+follow = "✅ {userDisplay}をフォローしました"
+unfollow = "✅ {userDisplay}のフォロー解除しました"
+
+[follow.error]
+# フォローエラー時の通知
+# 変数: {userDisplay}
+userNotFound = "⚠️ ユーザー {userDisplay} が見つかりません"
+# 変数: {userDisplay}, {action}
+apiFailed = "❌ {userDisplay}の{action}に失敗しました"
+permissionDenied = "どなたさまですか？"
+
+[sleepReport]
+# 長時間無反応（睡眠）後の報告
+# 変数: {hours}
+report = "んぅ、{hours}時間くらい寝ちゃってたみたいです"
+reportUtatane = "ん... うたた寝しちゃってました"
 
 [noting]
+# notes は配列置換（マージではなく完全置換）されます
 notes = [
   "元のメモ1",
   "元のメモ2"
 ]
+# 変数: {item}
+want = "{item}、欲しいなぁ..."
+see = "お散歩していたら、道に{item}が落ちているのを見たんです！"
+expire = "気づいたら、{item}の賞味期限が切れてました…"
+
+[weather]
+# 天気予報への反応
+# 変数: {place}, {dateLabel}, {telop}, {tempStr}, {rainStr}
+forecast = "{place}の{dateLabel}のお天気は「{telop}」みたいですよ！{tempStr}{rainStr}\n今日も素敵な一日になりますように♪"
+# 変数: {place}
+notFound = "ごめんなさい、「{place}」の天気予報は見つかりませんでした…\nもう一度地名を確認してみてくださいね。"
+fetchError = "うぅ…天気データの取得に失敗しちゃいました。また後で試してみてください…"
+areaError = "地域データの取得に失敗しちゃいました。ごめんなさい…"
+noTemp = "今日は気温データがありませんでした。ごめんなさい…"
+
+[weather.autoNote]
+# 天気に応じた自動投稿のメッセージ
+sunny = "今日はいい天気ですね！"
+cloudy = "今日はちょっと曇り空です。"
+rainy = "傘が必要かもしれません！"
+snowy = "今日は雪が降りそうです。あたたかくしてくださいね！"
+thunder = "雷に気をつけてくださいね！"
+other = "今日も一日がんばりましょう♪"
+
+[timeSignal]
+# 時報・日付変更の通知
+# 変数: {today}, {leftDays}, {percentage}
+changeDate = "{today} になったよ！\n今年は残り{leftDays}日、あと{percentage}%だよ！"
