@@ -103,6 +103,7 @@ type Config = {
     enableGCMonitoring?: boolean;
     precision?: number;
   };
+  keywordTimeline?: 'follower' | 'local' | 'hybrid' | 'global';
 };
 
 import { performStartupConfigCheck } from './config-updater.js';

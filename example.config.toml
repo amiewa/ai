@@ -13,15 +13,6 @@ i = "token"
 aiName = ["藍", "三須木"]
 master = "admin" # ローカルの管理者のusername
 
-# HTTP API と WebSocket 接続設定
-# これらの設定は、外部APIやWebSocket接続時に送信されるUser-Agentを制御します
-# サーバー管理者がボットの識別を容易にし、適切なレート制限を設定できるようになります
-[http]
-userAgent = "藍 (Ai) Bot/3.1.9-lqvp (+https://github.com/your-repo/ai-bot)"
-
-[websocket]
-userAgent = "藍 (Ai) Bot/3.1.9-lqvp (+https://github.com/your-repo/ai-bot)"
-
 # 基本機能の有効/無効
 notingEnabled = true # 自動単語機能
 keywordEnabled = true # キーワード検索
@@ -54,6 +45,15 @@ defaultVisibility = "public" # デフォルト投稿の公開範囲
 # 天気予報設定
 weatherAutoNotePref = "東京都" # 都道府県
 weatherAutoNoteHour = 7 # 天気予報を投稿する時間
+
+# HTTP API と WebSocket 接続設定
+# これらの設定は、外部APIやWebSocket接続時に送信されるUser-Agentを制御します
+# サーバー管理者がボットの識別を容易にし、適切なレート制限を設定できるようになります
+[http]
+userAgent = "藍 (Ai) Bot/3.1.9-lqvp (+https://github.com/your-repo/ai-bot)"
+
+[websocket]
+userAgent = "藍 (Ai) Bot/3.1.9-lqvp (+https://github.com/your-repo/ai-bot)"
 
 # Gemini AI 統合設定
 [gemini]
@@ -158,3 +158,11 @@ eventLoopMonitoringInterval = 1000
 enableGCMonitoring = true
 # 数値の小数点以下の表示桁数
 precision = 2
+
+# キーワード学習で参照するタイムラインを指定します
+#   "follower" : フォロー中ユーザーのノート (notes/timeline)
+#   "local"    : ローカルタイムライン        (notes/local-timeline)
+#   "hybrid"   : ソーシャルTL（デフォルト）  (notes/hybrid-timeline)
+#   "global"   : グローバルタイムライン      (notes/global-timeline)
+# 未指定時は "hybrid"
+keywordTimeline = "hybrid"

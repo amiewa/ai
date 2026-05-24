@@ -35,9 +35,14 @@ export default class extends Module {
 
   @bindThis
   private async learn() {
-    const tl = await this.ai.api<any[]>('notes/hybrid-timeline', {
-      limit: 30,
-    });
+    const timelineMap = {
+      follower: 'notes/timeline',
+      local: 'notes/local-timeline',
+      hybrid: 'notes/hybrid-timeline',
+      global: 'notes/global-timeline',
+    } as const;
+    const endpoint = timelineMap[config.keywordTimeline ?? 'hybrid'];
+    const tl = await this.ai.api<any[]>(endpoint, { limit: 30 });
 
     const interestedNotes = tl.filter(
       (note) =>
