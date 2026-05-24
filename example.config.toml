@@ -26,6 +26,21 @@ checkEmojisAtOnce = true
 # システム設定 - Docker環境向け
 mecab = "/usr/bin/mecab" # MeCabのパス
 mecabDic = "/usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd/" # MeCabの辞書のパス
+
+# MeCab辞書の種別を指定します（読みのカラム位置が辞書ごとに異なるため）
+#   "ipadic" : mecab-ipadic-neologd 等のIPAdic系（デフォルト）
+#   "unidic" : unidic-csj-202512 / unidic-cwj-202512
+# 未指定時は "ipadic"
+mecabDicType = "ipadic"
+
+# キーワード学習で参照するタイムラインを指定します
+#   "follower" : フォロー中ユーザーのノート (notes/timeline)
+#   "local"    : ローカルタイムライン        (notes/local-timeline)
+#   "hybrid"   : ソーシャルTL（デフォルト）  (notes/hybrid-timeline)
+#   "global"   : グローバルタイムライン      (notes/global-timeline)
+# 未指定時は "hybrid"
+keywordTimeline = "hybrid"
+
 memoryDir = "data" # メモリファイルの保存先
 
 # フォロー設定
@@ -158,17 +173,3 @@ eventLoopMonitoringInterval = 1000
 enableGCMonitoring = true
 # 数値の小数点以下の表示桁数
 precision = 2
-
-# キーワード学習で参照するタイムラインを指定します
-#   "follower" : フォロー中ユーザーのノート (notes/timeline)
-#   "local"    : ローカルタイムライン        (notes/local-timeline)
-#   "hybrid"   : ソーシャルTL（デフォルト）  (notes/hybrid-timeline)
-#   "global"   : グローバルタイムライン      (notes/global-timeline)
-# 未指定時は "hybrid"
-keywordTimeline = "hybrid"
-
-# MeCab辞書の種別を指定します（読みのカラム位置が辞書ごとに異なるため）
-#   "ipadic" : mecab-ipadic-neologd 等のIPAdic系（デフォルト）
-#   "unidic" : unidic-csj-202512 / unidic-cwj-202512
-# 未指定時は "ipadic"
-mecabDicType = "ipadic"
