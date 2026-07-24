@@ -7,8 +7,8 @@ import Message from '@/message.js';
 import { Note } from '@/misskey/note.js';
 import Module from '@/module.js';
 import serifs from '@/serifs.js';
-import { jinaRead } from '@/utils/jina.js';
 import { exaSearch } from '@/utils/exa.js';
+import { jinaRead } from '@/utils/jina.js';
 import { plain } from '@/utils/mfm.js';
 import urlToBase64 from '@/utils/url2base64.js';
 import urlToJson from '@/utils/url2json.js';
@@ -96,8 +96,11 @@ type ApiErrorResponse = {
 type GeminiApiResponse = string | ApiErrorResponse | null;
 
 // OpenAI API互換の型定義
-type OpenaiContentPart =
-  | { type: string; text?: string; image_url?: { url: string } };
+type OpenaiContentPart = {
+  type: string;
+  text?: string;
+  image_url?: { url: string };
+};
 
 type OpenaiSystemOrUserMessage = {
   role: 'system' | 'user';
@@ -959,7 +962,10 @@ export default class extends Module {
     if (aiChat.history) {
       for (const entry of aiChat.history) {
         messages.push({
-          role: entry.role === 'model' ? 'assistant' : entry.role as 'user' | 'system',
+          role:
+            entry.role === 'model'
+              ? 'assistant'
+              : (entry.role as 'user' | 'system'),
           content: entry.content,
         });
       }
@@ -967,9 +973,11 @@ export default class extends Module {
 
     // ユーザーメッセージを構築（画像がある場合はマルチモーダル形式）
     if (files.length > 0) {
-      const content: Array<{ type: string; text?: string; image_url?: { url: string } }> = [
-        { type: 'text', text: aiChat.question || '' },
-      ];
+      const content: Array<{
+        type: string;
+        text?: string;
+        image_url?: { url: string };
+      }> = [{ type: 'text', text: aiChat.question || '' }];
       for (const file of files) {
         content.push({
           type: 'image_url',
@@ -983,13 +991,18 @@ export default class extends Module {
 
     // OpenAI APIリクエストを構築
     const model = config.aiProvider?.openai?.model || 'gpt-4o-mini';
-    const baseUrl = config.aiProvider?.openai?.baseUrl || 'https://api.openai.com';
+    const baseUrl =
+      config.aiProvider?.openai?.baseUrl || 'https://api.openai.com';
     const apiUrl = `${baseUrl}/v1/chat/completions`;
     const apiKey = config.aiProvider?.openai?.apiKey;
 
     if (!apiKey) {
       this.log('OpenAI API key is not configured');
-      return { error: true, errorCode: null, errorMessage: 'OpenAI API key is not configured' };
+      return {
+        error: true,
+        errorCode: null,
+        errorMessage: 'OpenAI API key is not configured',
+      };
     }
 
     // Exa / Jina ツールの構築
@@ -1052,7 +1065,8 @@ export default class extends Module {
       });
     }
 
-    const maxRoundsRaw = exaConfig?.tool?.maxRounds ?? jinaConfig?.tool?.maxRounds;
+    const maxRoundsRaw =
+      exaConfig?.tool?.maxRounds ?? jinaConfig?.tool?.maxRounds;
     const parsedMaxRounds =
       typeof maxRoundsRaw === 'number' && !Number.isNaN(maxRoundsRaw)
         ? Math.floor(maxRoundsRaw)
@@ -1087,14 +1101,19 @@ export default class extends Module {
           })
           .json();
 
-        this.log(`OpenAI互換APIレスポンス(round=${round}): ${JSON.stringify(resData)}`);
+        this.log(
+          `OpenAI互換APIレスポンス(round=${round}): ${JSON.stringify(resData)}`
+        );
       } catch (err: unknown) {
         this.log('Error By Call OpenAI Compatible API');
         let errorCode: number | null = null;
         let errorMessage: string | null = null;
 
         if (err && typeof err === 'object' && 'response' in err) {
-          const httpError = err as { response?: { statusCode?: number; statusMessage?: string }; message?: string };
+          const httpError = err as {
+            response?: { statusCode?: number; statusMessage?: string };
+            message?: string;
+          };
           if (typeof httpError.response?.statusCode === 'number') {
             errorCode = httpError.response.statusCode;
           }
@@ -1166,7 +1185,11 @@ export default class extends Module {
 
       const results = await Promise.all(
         effectiveToolCalls.map(async (call) => {
-          const toolResult = await this.executeToolCall(call, exaConfig, jinaConfig);
+          const toolResult = await this.executeToolCall(
+            call,
+            exaConfig,
+            jinaConfig
+          );
           this.log(
             `ツール結果(${call.function.name}, id=${call.id}): ${toolResult.slice(0, 200)}`
           );
@@ -1184,7 +1207,9 @@ export default class extends Module {
 
       // 最終ラウンドの場合はツールを送らず、最終アシスタント本文を強制
       if (isLastRound) {
-        this.log('最終ラウンドに到達したため、ツールなしで最終応答を取得します');
+        this.log(
+          '最終ラウンドに到達したため、ツールなしで最終応答を取得します'
+        );
         try {
           const finalRes: any = await got
             .post(apiUrl, {
@@ -1780,12 +1805,14 @@ export default class extends Module {
 
     // APIキーとプロンプトの確認
     const provider = this.getProvider();
-    const apiKey = provider === 'openai'
-      ? config.aiProvider?.openai?.apiKey
-      : config.gemini?.apiKey;
-    const apiUrl = provider === 'openai'
-      ? `${config.aiProvider?.openai?.baseUrl || 'https://api.openai.com'}/v1/chat/completions`
-      : GEMINI_API;
+    const apiKey =
+      provider === 'openai'
+        ? config.aiProvider?.openai?.apiKey
+        : config.gemini?.apiKey;
+    const apiUrl =
+      provider === 'openai'
+        ? `${config.aiProvider?.openai?.baseUrl || 'https://api.openai.com'}/v1/chat/completions`
+        : GEMINI_API;
 
     if (!apiKey || !config.gemini.autoNote.prompt) {
       this.log('APIキーまたは自動ノート用プロンプトが設定されていません。');
@@ -1916,20 +1943,23 @@ export default class extends Module {
     }
 
     const provider = this.getProvider();
-    const hasApiKey = provider === 'openai'
-      ? !!config.aiProvider?.openai?.apiKey
-      : !!config.gemini?.apiKey;
+    const hasApiKey =
+      provider === 'openai'
+        ? !!config.aiProvider?.openai?.apiKey
+        : !!config.gemini?.apiKey;
 
     if (!hasApiKey) {
       msg.reply(serifs.aichat.nothing(exist.type));
       return false;
     }
-    const apiKey = provider === 'openai'
-      ? config.aiProvider?.openai?.apiKey
-      : config.gemini?.apiKey;
-    const apiUrl = provider === 'openai'
-      ? `${config.aiProvider?.openai?.baseUrl || 'https://api.openai.com'}/v1/chat/completions`
-      : GEMINI_API;
+    const apiKey =
+      provider === 'openai'
+        ? config.aiProvider?.openai?.apiKey
+        : config.gemini?.apiKey;
+    const apiUrl =
+      provider === 'openai'
+        ? `${config.aiProvider?.openai?.baseUrl || 'https://api.openai.com'}/v1/chat/completions`
+        : GEMINI_API;
 
     aiChat = {
       question: question,
