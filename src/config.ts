@@ -1,4 +1,4 @@
-type Config = {
+export type Config = {
   configVersion?: number; // 設定ファイルバージョン
   host: string;
   serverName?: string;
@@ -19,6 +19,14 @@ type Config = {
   serverMonitoring: boolean;
   checkEmojisEnabled?: boolean;
   checkEmojisAtOnce?: boolean;
+  aiProvider?: {
+    provider?: 'gemini' | 'openai'; // デフォルト: 'gemini'
+    openai?: {
+      apiKey?: string;
+      baseUrl?: string; // OpenAI互換APIのURL（デフォルト: https://api.openai.com）
+      model?: string;
+    };
+  };
   gemini?: {
     enabled?: boolean;
     apiKey?: string;
@@ -48,6 +56,32 @@ type Config = {
       enabled?: boolean;
       prompt?: string;
       groundingWithGoogleSearch?: boolean;
+    };
+  };
+  jina?: {
+    enabled?: boolean;
+    apiKey?: string;
+    search?: {
+      enabled?: boolean;
+      maxResults?: number; // 1-5
+    };
+    read?: {
+      enabled?: boolean;
+      tokenBudget?: number;
+    };
+    tool?: {
+      maxRounds?: number; // default 3
+    };
+  };
+  exa?: {
+    enabled?: boolean;
+    apiKey?: string;
+    search?: {
+      enabled?: boolean;
+      maxResults?: number; // 1-5
+    };
+    tool?: {
+      maxRounds?: number; // default 3
     };
   };
   mecab?: string;
