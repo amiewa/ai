@@ -2,6 +2,7 @@ import { bindThis } from '@/decorators.js';
 import Module from '@/module.js';
 import WebSocket from 'ws';
 import config from '@/config.js';
+import serifs, { getSerif } from '@/serifs.js';
 
 // Wolfx APIからの地震データの型定義
 interface WolfxEarthquakeData {
@@ -913,7 +914,7 @@ export default class extends Module {
       return;
     }
 
-    const message = `さっきの地震速報は取り消されました。実際の揺れはなかったようです。`;
+    const message = serifs.earthquake.cancellation;
 
     try {
       await this.ai.post({
@@ -986,34 +987,15 @@ export default class extends Module {
     // 初回メッセージの場合のみ、震度に応じた反応を追加
     if (isInitial) {
       if (intensityValue < 4) {
-        message += this.randomChoice([
-          'ゆれ……',
-          'ゆれ?',
-          '地震ですかね？',
-          '揺れそうな気がします！',
-          'ゆ……？',
-          'ゆ？',
-          'ぽよん！',
-          ':blobbounce:',
-        ]);
+        message += getSerif(serifs.earthquake.reactions.weak);
       } else if (intensityValue === 4) {
-        message += this.randomChoice([
-          'ゆれ……！',
-          '地震です！！',
-          '結構揺れます！',
-        ]);
+        message += getSerif(serifs.earthquake.reactions.intensity4);
       } else if (intensityValue === 5) {
-        message += this.randomChoice([
-          'ゆれます……！　おおきいです！！',
-          'かなり揺れます！',
-        ]);
+        message += getSerif(serifs.earthquake.reactions.intensity5);
       } else if (intensityValue === 6) {
-        message += this.randomChoice([
-          '大地震です！！',
-          'めちゃくちゃ揺れます！',
-        ]);
+        message += getSerif(serifs.earthquake.reactions.intensity6);
       } else if (intensityValue >= 7) {
-        message += this.randomChoice(['！！　大地震です！！']);
+        message += getSerif(serifs.earthquake.reactions.intensity7);
       }
 
       message += '\n\n';
@@ -1176,12 +1158,6 @@ export default class extends Module {
         hour12: false,
       }) + ' JST'
     );
-  }
-
-  @bindThis
-  private randomChoice(a: Array<string>): string {
-    const r = Math.floor(Math.random() * a.length);
-    return a[r];
   }
 
   private scheduleEventCleanup(eventId: string): void {

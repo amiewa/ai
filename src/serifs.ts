@@ -575,6 +575,33 @@ const defaultSerifs = {
     changeDate: (today: string, leftDays: number, percentage: number) =>
       `${today} になったよ！\n今年は残り${leftDays}日、あと${percentage}%だよ！`,
   },
+
+  /**
+   * 地震速報
+   */
+  earthquake: {
+    reactions: {
+      // 震度4未満
+      weak: [
+        'ゆれ……',
+        'ゆれ?',
+        '地震ですかね？',
+        '揺れそうな気がします！',
+        'ゆ……？',
+        'ゆ？',
+        'ぽよん！',
+        ':blobbounce:',
+      ],
+      intensity4: ['ゆれ……！', '地震です！！', '結構揺れます！'],
+      intensity5: ['ゆれます……！　おおきいです！！', 'かなり揺れます！'],
+      intensity6: ['大地震です！！', 'めちゃくちゃ揺れます！'],
+      // 震度7以上
+      intensity7: ['！！　大地震です！！'],
+    },
+
+    cancellation:
+      'さっきの地震速報は取り消されました。実際の揺れはなかったようです。',
+  },
 };
 
 function getParamNames(func: Function): string[] {
