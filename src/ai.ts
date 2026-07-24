@@ -18,10 +18,7 @@ import { sleep } from './utils/sleep.js';
 import DatabaseManager from '@/database/DatabaseManager.js';
 import APIClient from '@/api/APIClient.js';
 import TimerManager from '@/timer/TimerManager.js';
-// import pkg from '../package.json' assert { type: 'json' };
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const pkg = require('../package.json');
+import { fullVersion } from '@/version.js';
 
 type MentionHook = (msg: Message) => Promise<boolean | HandlerResult>;
 type ContextHook = (
@@ -50,7 +47,7 @@ export type Meta = {
  * 藍
  */
 export default class 藍 {
-  public readonly version = pkg._v;
+  public readonly version = fullVersion;
   public account: User;
   public connection!: Stream;
   public modules: Module[] = [];

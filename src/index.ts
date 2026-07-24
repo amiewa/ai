@@ -9,10 +9,7 @@ import 藍 from './ai.js';
 import config from './config.js';
 import _log from './utils/log.js';
 import type { User } from '@/misskey/user.js';
-// import pkg from '../package.json' assert { type: 'json' };
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const pkg = require('../package.json');
+import { fullVersion } from '@/version.js';
 
 import CoreModule from './modules/core/index.js';
 import TalkModule from './modules/talk/index.js';
@@ -58,7 +55,7 @@ function log(msg: string): void {
   _log(`[Boot]: ${msg}`);
 }
 
-log(chalk.bold(`Ai v${pkg._v}`));
+log(chalk.bold(`Ai v${fullVersion}`));
 
 process.on('uncaughtException', (err) => {
   try {

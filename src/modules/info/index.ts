@@ -4,9 +4,8 @@ import type { default as AI } from '@/ai.js';
 import type Message from '@/message.js';
 import config from '@/config.js';
 import type DatabaseManager from '@/database/DatabaseManager.js';
-import * as fs from 'fs';
-import path from 'path';
 import os from 'os';
+import { fullVersion } from '@/version.js';
 
 // 型定義
 declare namespace NodeJS {
@@ -49,7 +48,6 @@ const gcStats = {
   lastGCDuration: 0,
 };
 
-let version = 'unknown';
 let eventLoopDelay = 0;
 let dbStats: DatabaseStats = {
   collections: 0,
@@ -60,24 +58,6 @@ let dbStats: DatabaseStats = {
 // ユーティリティ関数
 function isPromise(p: any): p is Promise<any> {
   return p !== null && typeof p === 'object' && typeof p.then === 'function';
-}
-
-// 初期化処理
-/**
- * バージョン情報をpackage.jsonから取得します。
- */
-function initializeVersion() {
-  try {
-    const pkg = JSON.parse(
-      fs.readFileSync(path.resolve(process.cwd(), 'package.json'), 'utf-8')
-    );
-    version = pkg._v || pkg.version || 'development';
-  } catch (e) {
-    console.error(
-      'Failed to get version:',
-      e instanceof Error ? e.message : String(e)
-    );
-  }
 }
 
 /**
@@ -135,7 +115,6 @@ function setupGCMonitoring() {
   global.gc = wrappedGC as NodeJS.Global['gc'];
 }
 
-initializeVersion();
 setupGCMonitoring();
 
 // 統計更新関数
@@ -566,7 +545,7 @@ export default class InfoModule extends Module {
 
       const isMaster =
         msg.user.username === config.master && msg.user.host === null;
-      let response = `ℹ️ バージョン: ${version}\n`;
+      let response = `ℹ️ バージョン: ${fullVersion}\n`;
 
       if (isMaster) {
         response += this.formatMasterReply();
