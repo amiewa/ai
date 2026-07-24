@@ -70,6 +70,14 @@ userAgent = "藍 (Ai) Bot/3.1.9-lqvp (+https://github.com/your-repo/ai-bot)"
 [websocket]
 userAgent = "藍 (Ai) Bot/3.1.9-lqvp (+https://github.com/your-repo/ai-bot)"
 
+[aiProvider]
+provider = "gemini" # デフォルトのAIプロバイダー (例: "gemini", "openai")
+
+[aiProvider.openai]
+apiKey = "token" # OpenAI APIキー
+baseUrl = "https://api.openai.com" # OpenAI APIのベースURL
+model = "gpt-4" # 使用するモデル (例: "gpt-4", "gpt-3.5-turbo")
+
 # Gemini AI 統合設定
 [gemini]
 enabled = true
@@ -158,6 +166,38 @@ apiKey = "token"  # Veo APIキー（省略時はgemini.apiKeyを使用）
 model = "veo-3.0-fast-generate-preview"
 pollIntervalMs = 10000 # ポーリング間隔 (ミリ秒)
 maxWaitMs = 900000 # 最大待機時間 (ミリ秒)
+
+# Jina AI 設定（OpenAI互換プロバイダー使用時のみ有効）
+# jina.ai の検索/読み取りAPIをツール呼び出し経由で利用できるようにします。
+# apiKey がある場合のみ検索ツールが有効化されます。
+[jina]
+enabled = false # Jinaツール機能の有効/無効
+apiKey = "token" # Jina APIキー（検索を使うために必須）
+
+[jina.search]
+enabled = true  # jina_search ツールを送信するか
+maxResults = 5  # 検索結果の最大件数 (1-5)
+
+[jina.read]
+enabled = true      # jina_read ツールを送信するか
+tokenBudget = 0     # 読み取り時のトークン予算 (0 または未指定で省略)
+
+[jina.tool]
+maxRounds = 3 # ツール呼び出しの最大ラウンド数
+
+# Exa AI 検索設定（OpenAI互換プロバイダー使用時のみ有効）
+# api.exa.ai の検索APIをツール呼び出し経由で利用できるようにします。
+# apiKey がある場合のみ検索ツールが有効化されます。
+[exa]
+enabled = false # Exaツール機能の有効/無効
+apiKey = "token" # Exa APIキー（検索を使うために必須）
+
+[exa.search]
+enabled = true  # exa_search ツールを送信するか
+maxResults = 5  # 検索結果の最大件数 (1-5)
+
+[exa.tool]
+maxRounds = 3 # ツール呼び出しの最大ラウンド数
 
 # アップデートチェッカー設定
 [updateChecker]

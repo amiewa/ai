@@ -165,7 +165,7 @@ export default class extends Module {
         },
         responseType: 'buffer',
       }).buffer();
-      return videoBuffer;
+      return Buffer.from(videoBuffer);
     } catch (error) {
       this.log(`Failed to download video: ${error}`);
       return null;

@@ -42,8 +42,7 @@ export default class APIClient {
       );
 
       const res = await got
-        .post({
-          url: `${config.apiUrl}/drive/files/create`,
+        .post(`${config.apiUrl}/drive/files/create`, {
           body: form,
           headers: {
             'User-Agent': this.getDefaultUserAgent(),
