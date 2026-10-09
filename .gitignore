@@ -20,6 +20,7 @@ package-lock.json
 
 # Local Environment
 .env
+.devcontainer/
 
 # Agent
 .agents/
