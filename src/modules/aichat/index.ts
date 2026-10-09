@@ -818,6 +818,18 @@ export default class extends Module {
         this.log(`${err.name}\n${err.message}\n${err.stack}`);
       }
 
+      // 原因調査用にレスポンス本文（API のエラー詳細）を出力
+      const errorBody = (err as any)?.response?.body;
+      if (errorBody !== undefined) {
+        this.log(
+          `Geminiエラーレスポンス: ${
+            typeof errorBody === 'string'
+              ? errorBody
+              : JSON.stringify(errorBody)
+          }`
+        );
+      }
+
       // エラー情報を返す
       return { error: true, errorCode, errorMessage };
     }
@@ -1819,8 +1831,10 @@ export default class extends Module {
       return;
     }
 
+    // 空文字のテキスト part は Gemini API が 400 で拒否するため、非空の指示文を渡す
     const aiChat: AiChat = {
-      question: '',
+      question:
+        '今の気分や最近の出来事について、Misskeyにノートとして投稿する短い独り言を書いてください。',
       prompt: config.gemini.autoNote.prompt,
       api: apiUrl,
       key: apiKey || '',
