@@ -823,7 +823,9 @@ export default class extends Module {
       if (errorBody !== undefined) {
         this.log(
           `Geminiエラーレスポンス: ${
-            typeof errorBody === 'string' ? errorBody : JSON.stringify(errorBody)
+            typeof errorBody === 'string'
+              ? errorBody
+              : JSON.stringify(errorBody)
           }`
         );
       }
